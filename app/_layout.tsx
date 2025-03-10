@@ -20,6 +20,7 @@ export default function RootLayout() {
           animation: "flip",
         }}
       />
+      <Stack.Screen name="(tabs)" />
     </Stack>
   );
 }

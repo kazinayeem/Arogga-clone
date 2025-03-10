@@ -2,16 +2,15 @@ import AuthButton from "@/components/Button";
 import CustomModal from "@/components/CustomModal";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 export default function SignUp() {
-  const [checked, setChecked] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [error, setError] = useState({
     name: "",
     email: "",
@@ -19,36 +18,21 @@ export default function SignUp() {
   });
 
   const submitform = () => {
-    const errormessage: { email: string; password: string; name: string } = {
-      email: "",
-      password: "",
-      name: "",
-    };
-    if (!email) {
-      errormessage.email = "Email is required";
-    }
-    if (!password) {
-      errormessage.password = "Password is required";
-    }
-    if (!name) {
-      errormessage.name = "Name is required";
-    }
-    if (Object.keys(errormessage).length > 0) {
+    const errormessage = { email: "", password: "", name: "" };
+
+    if (!email) errormessage.email = "Email is required";
+    if (!password) errormessage.password = "Password is required";
+    if (!name) errormessage.name = "Name is required";
+
+    if (errormessage.email || errormessage.password || errormessage.name) {
       setError(errormessage);
       return;
     }
-    setError({
-      email: "",
-      password: "",
-      name: "",
-    });
+
     setModalVisible(true);
-    console.log(
-      "Form submitted with email:",
-      email,
-      "and password  :",
-      password
-    );
+    console.log("Modal should be visible:", modalVisible); // Debugging log
+
+    setError({ email: "", password: "", name: "" });
   };
 
   const headerHeight = useHeaderHeight();
@@ -61,10 +45,10 @@ export default function SignUp() {
     >
       {/* Input Fields */}
       <CustomModal
-        title="Yeah! Welcome Back"
-        description="You have successfully logged in to your account."
+        title="Success!"
+        description="You have successfully signed up."
         btnaction={() => {
-          console.log("Modal button clicked");
+          router.push("/(tabs)");
         }}
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -77,7 +61,7 @@ export default function SignUp() {
           }`}
         >
           <AntDesign
-            name="mail"
+            name="user"
             size={20}
             color={`${error.name ? "red" : "#E5E7EB"}`}
             className="mr-2"
@@ -86,11 +70,11 @@ export default function SignUp() {
             value={name}
             onChangeText={(text) => setName(text)}
             className="flex-1 text-base"
-            placeholder="Enter your email"
-            keyboardType="email-address"
+            placeholder="Name"
+            keyboardType="default"
             autoCapitalize="none"
             autoCorrect={false}
-            textContentType="emailAddress"
+            textContentType="name"
             returnKeyType="next"
           />
         </View>
@@ -176,7 +160,7 @@ export default function SignUp() {
         </View>
 
         {/* dont hav an account text */}
-        <View className="flex mt-2"></View>
+
         <TouchableOpacity className="flex flex-row items-center justify-center">
           <Text className="text-gray-500">Already have an account?</Text>
           <Text className="text-green-500 ml-1">
