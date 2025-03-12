@@ -1,7 +1,7 @@
 import AuthButton from "@/components/Button";
 import { router } from "expo-router";
 import React from "react";
-import { Image, StatusBar, Text, TouchableOpacity, View } from "react-native";
+import { Image, StatusBar, Text, View } from "react-native";
 
 export default function AuthScreen() {
   return (
@@ -25,14 +25,6 @@ export default function AuthScreen() {
 
       {/* */}
       <View className="flex flex-col w-full justify-between px-5 mb-5">
-        <TouchableOpacity
-          className="bg-[#199A8E] m-auto w-[85%] h-16 rounded-full items-center justify-center mb-2"
-          activeOpacity={0.7}
-        >
-          <Text className="font-semibold text-white text-xl">
-            Continue with Apple
-          </Text>
-        </TouchableOpacity>
         <AuthButton
           title="Login"
           onPress={() => {
@@ -42,7 +34,7 @@ export default function AuthScreen() {
         <AuthButton
           title="Sign Up"
           onPress={() => {
-            console.log("Button pressed");
+            router.navigate("/(auth)/SignUp");
           }}
         />
       </View>

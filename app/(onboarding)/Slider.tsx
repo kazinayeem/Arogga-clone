@@ -30,14 +30,12 @@ export default function Slider() {
     if (currentIndex < onBoardingData.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      setCurrentIndex(0);
+      router.replace("/(onboarding)/AuthScreen");
     }
   };
 
-  
-
   const handleSkip = () => {
-    router.navigate("/(onboarding)/AuthScreen")
+    router.navigate("/(onboarding)/AuthScreen");
   };
 
   return (
@@ -53,7 +51,6 @@ export default function Slider() {
         entering={FadeInRight}
         exiting={FadeOutDown}
         source={onBoardingData[currentIndex].image}
-        
       />
 
       {/* Text Content */}

@@ -73,7 +73,9 @@ export default function ForgotPassword() {
           onPress={() => {
             router.push({
               pathname: "/(auth)/OtpScreen",
-              params: { email, phone },
+              params: {
+                data: toggle ? email : phone,
+              },
             });
           }}
           color="white"

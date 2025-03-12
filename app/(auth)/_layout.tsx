@@ -51,7 +51,21 @@ export default function Layout() {
         name="OtpScreen"
         options={{
           headerTitleAlign: "center",
-          headerTitle: "Verify OTP",
+          headerTitle: "",
+          headerShadowVisible: false,
+          headerTransparent: true,
+          headerStyle: {
+            backgroundColor: "white",
+          },
+          headerTintColor: "black",
+          animation: "fade_from_bottom",
+        }}
+      />
+      <Stack.Screen
+        name="ResetPasswordScreen"
+        options={{
+          headerTitleAlign: "center",
+          headerTitle: "",
           headerShadowVisible: false,
           headerTransparent: true,
           headerStyle: {
