@@ -33,6 +33,34 @@ export default function Layout() {
           animation: "fade_from_bottom",
         }}
       />
+      <Stack.Screen
+        name="ForgotPassword"
+        options={{
+          headerTitleAlign: "center",
+          headerTitle: "",
+          headerShadowVisible: false,
+          headerTransparent: true,
+          headerStyle: {
+            backgroundColor: "white",
+          },
+          headerTintColor: "black",
+          animation: "fade_from_bottom",
+        }}
+      />
+      <Stack.Screen
+        name="OtpScreen"
+        options={{
+          headerTitleAlign: "center",
+          headerTitle: "Verify OTP",
+          headerShadowVisible: false,
+          headerTransparent: true,
+          headerStyle: {
+            backgroundColor: "white",
+          },
+          headerTintColor: "black",
+          animation: "fade_from_bottom",
+        }}
+      />
     </Stack>
   );
 }

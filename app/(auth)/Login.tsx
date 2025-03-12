@@ -121,7 +121,7 @@ export default function Login() {
         {/* forgot passowrd */}
         <View className="flex mt-2">
           <TouchableOpacity className="flex flex-row items-center justify-end">
-            <Text className="text-green-500">Forgot Password?</Text>
+            <Link href={"/(auth)/ForgotPassword"} className="text-green-500">Forgot Password?</Link>
           </TouchableOpacity>
         </View>
 
