@@ -2,21 +2,20 @@ import AuthButton from "@/components/Button";
 import CustomModal from "@/components/CustomModal";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 export default function Login() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("test@gmail.com");
+  const [password, setPassword] = useState("123456789");
   const [error, setError] = useState({
     email: "",
     password: "",
   });
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   const submitform = () => {
+    setModalVisible(true);
     const errormessage: { email: string; password: string } = {
       email: "",
       password: "",
@@ -35,7 +34,7 @@ export default function Login() {
       email: "",
       password: "",
     });
-    setModalVisible(true);
+
     console.log(
       "Form submitted with email:",
       email,
@@ -52,12 +51,12 @@ export default function Login() {
       className="flex-1 flex justify-between bg-white px-6"
       style={{ marginTop: headerHeight }}
     >
-      {/* Input Fields */}
       <CustomModal
         title="Yeah! Welcome Back"
         description="You have successfully logged in to your account."
         btnaction={() => {
-          console.log("Modal button clicked");
+          setModalVisible(false);
+          router.push("/(home)/Home");
         }}
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
@@ -121,7 +120,9 @@ export default function Login() {
         {/* forgot passowrd */}
         <View className="flex mt-2">
           <TouchableOpacity className="flex flex-row items-center justify-end">
-            <Link href={"/(auth)/ForgotPassword"} className="text-green-500">Forgot Password?</Link>
+            <Link href={"/(auth)/ForgotPassword"} className="text-green-500">
+              Forgot Password?
+            </Link>
           </TouchableOpacity>
         </View>
 

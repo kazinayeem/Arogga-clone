@@ -1,7 +1,7 @@
 import AuthButton from "@/components/Button";
 import { router } from "expo-router";
 import React from "react";
-import { Image, StatusBar, Text, View } from "react-native";
+import { Image, StatusBar, Text, TouchableOpacity, View } from "react-native";
 
 export default function AuthScreen() {
   return (
@@ -25,6 +25,12 @@ export default function AuthScreen() {
 
       {/* */}
       <View className="flex flex-col w-full justify-between px-5 mb-5">
+        <TouchableOpacity
+          className={`m-auto  w-[85%] h-16 rounded-full items-center justify-center mb-2 flex-row flex}`}
+          activeOpacity={0.7}
+        >
+          <Text>dsda</Text>
+        </TouchableOpacity>
         <AuthButton
           title="Login"
           onPress={() => {

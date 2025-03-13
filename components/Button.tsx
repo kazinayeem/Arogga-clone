@@ -22,11 +22,13 @@ export default function AuthButton({
   loading = false,
   icon,
   iconPosition = "left",
-  borderColor
+  borderColor,
 }: AuthButtonProps) {
   return (
     <TouchableOpacity
-      className={`m-auto w-[85%] h-16 rounded-full items-center justify-center mb-2 flex-row flex ${borderColor ? "border" : ""}`}
+      className={`m-auto  w-[85%] h-16 rounded-full items-center justify-center mb-2 flex-row flex ${
+        borderColor ? "border" : ""
+      }`}
       style={{ backgroundColor }}
       activeOpacity={0.7}
       onPress={onPress}
