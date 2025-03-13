@@ -11,6 +11,10 @@ export default function Layout() {
       {/* Onboarding page */}
       <Stack.Screen name="Slider" options={{ headerShown: false }} />
       <Stack.Screen name="AuthScreen" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="SearchScreen"
+        options={{ headerShown: false, animation: "flip" }}
+      />
     </Stack>
   );
 }

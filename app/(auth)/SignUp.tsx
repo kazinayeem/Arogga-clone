@@ -4,18 +4,22 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+
 export default function SignUp() {
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("");
-  const [name, setName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [error, setError] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [modalVisible, setModalVisible] = useState(false);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [error, setError] = useState({ name: "", email: "", password: "" });
 
   const submitform = () => {
     const errormessage = { email: "", password: "", name: "" };
@@ -30,100 +34,68 @@ export default function SignUp() {
     }
 
     setModalVisible(true);
-    console.log("Modal should be visible:", modalVisible); // Debugging log
-
     setError({ email: "", password: "", name: "" });
   };
 
   const headerHeight = useHeaderHeight();
-  const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
-    <View
-      className="flex-1 flex justify-between bg-white px-6"
-      style={{ marginTop: headerHeight }}
-    >
-      {/* Input Fields */}
+    <View style={[styles.container, { marginTop: headerHeight }]}>
       <CustomModal
         title="Success!"
         description="You have successfully signed up."
-        btnaction={() => {
-          router.push("/(tabs)");
-        }}
+        btnaction={() => router.push("/(tabs)")}
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
       />
 
-      <View className="mt-10 space-y-4 flex flex-col gap-5">
-        <View
-          className={`flex flex-row items-center border  rounded-xl bg-[#F9FAFB] px-4 py-1 ${
-            error.name ? "border-red-500" : "border-[#E5E7EB]"
-          }`}
-        >
+      <View style={styles.formContainer}>
+        <View style={[styles.inputContainer, error.name && styles.errorBorder]}>
           <AntDesign
             name="user"
             size={20}
-            color={`${error.name ? "red" : "#E5E7EB"}`}
-            className="mr-2"
+            color={error.name ? "red" : "#E5E7EB"}
           />
           <TextInput
             value={name}
-            onChangeText={(text) => setName(text)}
-            className="flex-1 text-base"
+            onChangeText={setName}
+            style={styles.input}
             placeholder="Name"
-            keyboardType="default"
-            autoCapitalize="none"
-            autoCorrect={false}
-            textContentType="name"
-            returnKeyType="next"
           />
         </View>
 
         <View
-          className={`flex flex-row items-center border  rounded-xl bg-[#F9FAFB] px-4 py-1 ${
-            error.email ? "border-red-500" : "border-[#E5E7EB]"
-          }`}
+          style={[styles.inputContainer, error.email && styles.errorBorder]}
         >
           <AntDesign
             name="mail"
             size={20}
-            color={`${error.email ? "red" : "#E5E7EB"}`}
-            className="mr-2"
+            color={error.email ? "red" : "#E5E7EB"}
           />
           <TextInput
             value={email}
-            onChangeText={(text) => setEmail(text)}
-            className="flex-1 text-base"
+            onChangeText={setEmail}
+            style={styles.input}
             placeholder="Enter your email"
             keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            textContentType="emailAddress"
-            returnKeyType="next"
           />
         </View>
 
         <View
-          className={`flex flex-row items-center border  rounded-xl bg-[#F9FAFB] px-4 py-1 ${
-            error.password ? "border-red-500" : "border-[#E5E7EB]"
-          }`}
+          style={[styles.inputContainer, error.password && styles.errorBorder]}
         >
           <AntDesign
             name="lock"
             size={20}
-            color={`${error.email ? "red" : "#E5E7EB"}`}
-            className="mr-2"
+            color={error.password ? "red" : "#E5E7EB"}
           />
           <TextInput
             value={password}
-            onChangeText={(text) => setPassword(text)}
-            className="flex-1 text-base"
+            onChangeText={setPassword}
+            style={styles.input}
             placeholder="Enter your password"
             secureTextEntry={!passwordVisible}
-            textContentType="password"
-            returnKeyType="done"
           />
-
           <TouchableOpacity
             onPress={() => setPasswordVisible(!passwordVisible)}
           >
@@ -134,23 +106,20 @@ export default function SignUp() {
             />
           </TouchableOpacity>
         </View>
-        {/* forgot passowrd */}
-        <View className="flex mt-2">
-          <TouchableOpacity className="flex flex-row items-center ">
-            <BouncyCheckbox
-              textStyle={{ textDecorationLine: "none" }}
-              size={20}
-              fillColor="#199A8E"
-              unFillColor="#FFFFFF"
-              iconStyle={{ borderColor: "red" }}
-              innerIconStyle={{ borderWidth: 1 }}
-              text="I agree to the terms and conditions"
-            />
-          </TouchableOpacity>
+
+        <View style={styles.checkboxContainer}>
+          <BouncyCheckbox
+            style={{ padding: 0, width: "10%" }}
+            textStyle={{ textDecorationLine: "none" }}
+            size={20}
+            fillColor="#199A8E"
+          />
+          <Text style={styles.checkboxText}>
+            I agree to the terms and conditions
+          </Text>
         </View>
 
-        {/* Login Button */}
-        <View className="mt-6">
+        <View style={styles.buttonContainer}>
           <AuthButton
             onPress={submitform}
             color="white"
@@ -159,11 +128,9 @@ export default function SignUp() {
           />
         </View>
 
-        {/* dont hav an account text */}
-
-        <TouchableOpacity className="flex flex-row items-center justify-center">
-          <Text className="text-gray-500">Already have an account?</Text>
-          <Text className="text-green-500 ml-1">
+        <TouchableOpacity style={styles.loginRedirect}>
+          <Text style={styles.grayText}>Already have an account?</Text>
+          <Text style={styles.greenText}>
             <Link href="/(auth)/Login">Login</Link>
           </Text>
         </TouchableOpacity>
@@ -171,3 +138,58 @@ export default function SignUp() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    paddingHorizontal: 24,
+  },
+  formContainer: {
+    marginTop: 40,
+    gap: 20,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 12,
+    backgroundColor: "#F9FAFB",
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderColor: "#E5E7EB",
+  },
+  errorBorder: {
+    borderColor: "red",
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+    marginLeft: 8,
+  },
+  checkboxContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8,
+  },
+  checkboxText: {
+    marginLeft: 0,
+    color: "#4B5563",
+  },
+  buttonContainer: {
+    marginTop: 24,
+  },
+  loginRedirect: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 16,
+  },
+  grayText: {
+    color: "#6B7280",
+  },
+  greenText: {
+    color: "#10B981",
+    marginLeft: 4,
+  },
+});

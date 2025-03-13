@@ -1,5 +1,11 @@
 import React from "react";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  Text,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+} from "react-native";
 
 interface AuthButtonProps {
   title: string;
@@ -26,10 +32,11 @@ export default function AuthButton({
 }: AuthButtonProps) {
   return (
     <TouchableOpacity
-      className={`m-auto  w-[85%] h-16 rounded-full items-center justify-center mb-2 flex-row flex ${
-        borderColor ? "border" : ""
-      }`}
-      style={{ backgroundColor }}
+      style={[
+        styles.button,
+        { backgroundColor },
+        borderColor ? { borderWidth: 1, borderColor } : {},
+      ]}
       activeOpacity={0.7}
       onPress={onPress}
       disabled={disabled || loading}
@@ -37,18 +44,43 @@ export default function AuthButton({
       {loading ? (
         <ActivityIndicator size="small" color={color} />
       ) : (
-        <View className="flex-row items-center">
+        <View style={styles.contentContainer}>
           {icon && iconPosition === "left" && (
-            <View className="mr-2">{icon}</View>
+            <View style={styles.iconLeft}>{icon}</View>
           )}
-          <Text className="font-semibold text-xl" style={{ color }}>
-            {title}
-          </Text>
+          <Text style={[styles.text, { color }]}>{title}</Text>
           {icon && iconPosition === "right" && (
-            <View className="ml-2">{icon}</View>
+            <View style={styles.iconRight}>{icon}</View>
           )}
         </View>
       )}
     </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  button: {
+    alignSelf: "center",
+    width: "100%",
+    height: 50,
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 8,
+    flexDirection: "row",
+  },
+  contentContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 18,
+    fontWeight: "600",
+  },
+  iconLeft: {
+    marginRight: 8,
+  },
+  iconRight: {
+    marginLeft: 8,
+  },
+});

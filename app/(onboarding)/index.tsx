@@ -1,31 +1,58 @@
-import { View, Text, Image, StatusBar } from "react-native";
+import { Link } from "expo-router";
 import React, { useEffect } from "react";
-import { Link, router } from "expo-router";
+import { Image, StatusBar, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
-  // when load and change the status bar color to white
   useEffect(() => {
     StatusBar.setBackgroundColor("#199A8E");
-    // setInterval(() => {
-    //   router.push("/(onboarding)/Slider");
-    // }, 1000);
-    
   }, []);
+
   return (
-    <View className="flex-1 items-center justify-center bg-[#199A8E]">
+    <View style={styles.container}>
       <Image
         source={require("@/assets/images/mainlogo.png")}
         alt="logo"
-        className="w-1/2 h-1/2"
+        style={styles.logo}
         resizeMode="contain"
       />
 
-      {/* next page */}
+      {/* Next page button */}
       <Link href="/(onboarding)/Slider">
-        <View className="bg-white w-20 h-20 rounded-full items-center justify-center shadow-lg mt-10">
-          <Text className="text-[#199A8E] text-xl font-bold">Next</Text>
+        <View style={styles.nextButton}>
+          <Text style={styles.nextText}>Next</Text>
         </View>
       </Link>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#199A8E",
+  },
+  logo: {
+    width: "50%",
+    height: "50%",
+  },
+  nextButton: {
+    backgroundColor: "white",
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    marginTop: 10,
+  },
+  nextText: {
+    color: "#199A8E",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+});

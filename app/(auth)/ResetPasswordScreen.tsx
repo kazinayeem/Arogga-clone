@@ -4,7 +4,14 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { router } from "expo-router";
 import React from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
 export default function ResetPasswordScreen() {
   const [modalVisible, setModalVisible] = React.useState(false);
   const [password, setPassword] = React.useState("");
@@ -13,15 +20,9 @@ export default function ResetPasswordScreen() {
     password: "",
   });
   const headerHeight = useHeaderHeight();
+
   return (
-    <View
-      className="flex flex-1 bg-white px-6"
-      style={{
-        backgroundColor: "white",
-        marginTop: headerHeight,
-        padding: 10,
-      }}
-    >
+    <View style={[styles.container, { marginTop: headerHeight }]}>
       <CustomModal
         title="Success"
         description="Your password has been reset successfully."
@@ -31,36 +32,34 @@ export default function ResetPasswordScreen() {
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
       />
-      <Text className="text-3xl mb-5 font-bold text-black">
-        Create New Password
-      </Text>
-      <Text className="text-base text-gray-500 leading-relaxed mb-5">
+      <Text style={styles.title}>Create New Password</Text>
+      <Text style={styles.description}>
         Create your new password to access your account. Your password must be
         at least 8 characters
       </Text>
 
-      <View className="flex flex-col mt-5 gap-7">
+      <View style={styles.inputContainer}>
         <View
-          className={`flex flex-row items-center border  rounded-full bg-[#F9FAFB] px-4 py-1 ${
-            error.password ? "border-red-500" : "border-[#E5E7EB]"
-          }`}
+          style={[
+            styles.inputWrapper,
+            error.password ? styles.errorBorder : styles.defaultBorder,
+          ]}
         >
           <AntDesign
             name="lock"
             size={20}
-            color={`${error.password ? "red" : "#E5E7EB"}`}
-            className="mr-2"
+            color={error.password ? "red" : "#E5E7EB"}
+            style={styles.icon}
           />
           <TextInput
             value={password}
             onChangeText={(text) => setPassword(text)}
-            className="flex-1 text-base"
+            style={styles.input}
             placeholder="Enter your password"
             secureTextEntry={!passwordVisible}
             textContentType="password"
             returnKeyType="done"
           />
-
           <TouchableOpacity
             onPress={() => setPasswordVisible(!passwordVisible)}
           >
@@ -73,26 +72,26 @@ export default function ResetPasswordScreen() {
         </View>
 
         <View
-          className={`flex flex-row items-center border  rounded-full bg-[#F9FAFB] px-4 py-1 ${
-            error.password ? "border-red-500" : "border-[#E5E7EB]"
-          }`}
+          style={[
+            styles.inputWrapper,
+            error.password ? styles.errorBorder : styles.defaultBorder,
+          ]}
         >
           <AntDesign
             name="lock"
             size={20}
-            color={`${error.password ? "red" : "#E5E7EB"}`}
-            className="mr-2"
+            color={error.password ? "red" : "#E5E7EB"}
+            style={styles.icon}
           />
           <TextInput
             value={password}
             onChangeText={(text) => setPassword(text)}
-            className="flex-1 text-base"
-            placeholder="Enter your password"
+            style={styles.input}
+            placeholder="Confirm your password"
             secureTextEntry={!passwordVisible}
             textContentType="password"
             returnKeyType="done"
           />
-
           <TouchableOpacity
             onPress={() => setPasswordVisible(!passwordVisible)}
           >
@@ -103,6 +102,7 @@ export default function ResetPasswordScreen() {
             />
           </TouchableOpacity>
         </View>
+
         <AuthButton
           onPress={() => {
             console.log("Reset Password clicked");
@@ -115,3 +115,51 @@ export default function ResetPasswordScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "black",
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 16,
+    color: "#6B7280", // Gray-500
+    lineHeight: 22,
+    marginBottom: 20,
+  },
+  inputContainer: {
+    marginTop: 20,
+  },
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 25,
+    backgroundColor: "#F9FAFB",
+    paddingHorizontal: 15,
+    paddingVertical: 7,
+    marginBottom: 12,
+  },
+  defaultBorder: {
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+  },
+  errorBorder: {
+    borderWidth: 1,
+    borderColor: "red",
+  },
+  icon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+  },
+});

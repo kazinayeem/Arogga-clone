@@ -1,12 +1,20 @@
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { StatusBar, Text, TouchableOpacity, View } from "react-native";
+import {
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Animated, { FadeInRight, FadeOutDown } from "react-native-reanimated";
+
 export default function Slider() {
   useEffect(() => {
     StatusBar.setBackgroundColor("white");
-    StatusBar.setNetworkActivityIndicatorVisible;
   }, []);
+
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const onBoardingData = [
     {
@@ -39,10 +47,10 @@ export default function Slider() {
   };
 
   return (
-    <View className="flex-1 bg-white items-center justify-between p-6">
+    <View style={styles.container}>
       {/* Skip Button */}
-      <TouchableOpacity onPress={handleSkip} className="self-end">
-        <Text className="text-gray-300 text-lg">Skip</Text>
+      <TouchableOpacity onPress={handleSkip} style={styles.skipButton}>
+        <Text style={styles.skipText}>Skip</Text>
       </TouchableOpacity>
 
       {/* Image */}
@@ -54,44 +62,113 @@ export default function Slider() {
       />
 
       {/* Text Content */}
-      <View className="bg-gray-100 self-end  flex-1 rounded-3xl p-3 items-center flex justify-center">
-        <View className="w-full items-center mb-8">
+      <View style={styles.textContainer}>
+        <View style={styles.titleContainer}>
           <Animated.Text
             key={currentIndex}
             entering={FadeInRight}
             exiting={FadeOutDown}
-            className="text-xl font-semibold text-start text-gray-800"
+            style={styles.titleText}
           >
             {onBoardingData[currentIndex].title}
           </Animated.Text>
         </View>
 
         {/* Pagination & Next Button */}
-        <View className="flex-row items-center justify-between w-full px-6">
+        <View style={styles.paginationContainer}>
           {/* Pagination Dots */}
-          <View className="flex-row space-x-2">
+          <View style={styles.dotContainer}>
             {onBoardingData.map((_, index) => (
               <TouchableOpacity
-                onPress={() => {
-                  setCurrentIndex(index);
-                }}
+                onPress={() => setCurrentIndex(index)}
                 key={index}
-                className={`w-6 h-2 rounded-full m-1 ${
-                  index === currentIndex ? "bg-green-600" : "bg-gray-300"
-                }`}
+                style={[
+                  styles.dot,
+                  index === currentIndex
+                    ? styles.activeDot
+                    : styles.inactiveDot,
+                ]}
               />
             ))}
           </View>
 
           {/* Next Button */}
-          <TouchableOpacity
-            onPress={handleNext}
-            className="bg-green-600 w-14 h-14 rounded-full items-center justify-center"
-          >
-            <Text className="text-white text-5xl">→</Text>
+          <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
+            <AntDesign name="arrowright" size={32} color="white" />
           </TouchableOpacity>
         </View>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 16,
+  },
+  skipButton: {
+    alignSelf: "flex-end",
+  },
+  skipText: {
+    color: "gray",
+    fontSize: 18,
+  },
+  textContainer: {
+    backgroundColor: "#f3f3f3",
+    alignSelf: "stretch",
+    flex: 1,
+    borderRadius: 24,
+    padding: 16,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  titleContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 32,
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: "600",
+    color: "#333",
+    textAlign: "center",
+  },
+  paginationContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    paddingHorizontal: 24,
+  },
+  dotContainer: {
+    flexDirection: "row",
+  },
+  dot: {
+    width: 24,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 4,
+  },
+  activeDot: {
+    backgroundColor: "#199A8E",
+  },
+  inactiveDot: {
+    backgroundColor: "#ccc",
+  },
+  nextButton: {
+    backgroundColor: "#199A8E",
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  nextText: {
+    color: "white",
+    fontSize: 32,
+  },
+});
